@@ -6,7 +6,7 @@ CREATE TABLE Carro
   marca VARCHAR(20) NOT NULL,
   cor VARCHAR(10),
   ano INTEGER (4),
-  estado ENUM('Novo', 'Semi-Novo', 'Usado'),
+  estado ENUM ('Novo', 'Semi-Novo', 'Usado'),
   num_chassi VARCHAR (17)NOT NULL,
   PRIMARY KEY (cd_carro),
   PRIMARY KEY (valor)
@@ -17,7 +17,7 @@ CREATE TABLE Cliente
   nome VARCHAR(12) NOT NULL,
   sobrenome VARCHAR(20),
   data_nasc DATE,
-  sexo ENUM('Masculino', 'Feminino'),
+  sexo ENUM ('Masculino', 'Feminino'),
   cpf CHAR(11) NOT NULL,
   fone VARCHAR(13),
   PRIMARY KEY (cd_cliente)
@@ -27,7 +27,7 @@ CREATE TABLE Vendedor
   cd_vendedor CHAR(6) NOT NULL,
   vend_nome VARCHAR(12) NOT NULL,
   vend_sobrenome VARCHAR (20),
-  vend_sexo ENUM('Masculino', 'Feminino'),
+  vend_sexo ENUM ('Masculino', 'Feminino'),
   salario REAL,
   porc_comissao REAL,
   vend_data_nasc DATE,

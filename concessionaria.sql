@@ -1,4 +1,4 @@
-CREATE TABLE Carro
+CREATE TABLE IF NOT EXISTS Carro
 (
   cd_carro CHAR(6) NOT NULL,
   valor REAL NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE Carro
   PRIMARY KEY (cd_carro),
   PRIMARY KEY (valor)
 );
-CREATE TABLE Cliente
+CREATE TABLE IF NOT EXISTS Cliente
 (
   cd_cliente CHAR(6) NOT NULL,
   nome VARCHAR(12) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Cliente
   fone VARCHAR(13),
   PRIMARY KEY (cd_cliente)
 );
-CREATE TABLE Vendedor
+CREATE TABLE IF NOT EXISTS Vendedor
 (
   cd_vendedor CHAR(6) NOT NULL,
   vend_nome VARCHAR(12) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE Vendedor
   vend_fone VARCHAR(13),
   PRIMARY KEY (cd_empregado)
 );
-CREATE TABLE Venda
+CREATE TABLE IF NOT EXISTS Venda
 (
   cd_venda CHAR(6) NOT NULL,
   valor REAL NOT NULL,

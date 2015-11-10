@@ -40,9 +40,10 @@ CREATE TABLE IF NOT EXISTS Venda
 (
   cd_venda CHAR(6) NOT NULL,
   valor REAL NOT NULL,
+  cd_carro char(6) not null,
   data_venda DATE NOT NULL,
-  cd_carro char(6) NOT NULL REFERENCES Carro(cd_carro,valor),
-  cd_cliente char(6) NOT NULL REFERENCES Cliente(Cliente_pkey),
-  cd_vendedor char(6) NOT NULL REFERENCES Vendedor(Vendedor_pkey),
+  FOREIGN KEY (cd_carro,valor) REFERENCES Carro(cd_carro,valor),
+  cd_cliente char(6) NOT NULL REFERENCES Cliente(cd_cliente),
+  cd_vendedor char(6) NOT NULL REFERENCES Vendedor(cd_vendedor),
   CONSTRAINT Venda_pkey PRIMARY KEY (cd_venda)
 );

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Carro
   ano CHAR(4) NOT NULL,
   estado VARCHAR (9) NOT NULL,
   num_chassi VARCHAR (17) NOT NULL,
-  PRIMARY KEY (cd_carro,valor)
+  CONSTRAINT Carro_pkey PRIMARY KEY (cd_carro,valor)
 );
 CREATE TABLE IF NOT EXISTS Cliente
 (
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Cliente
   sexo CHAR(1) NOT NULL,
   cpf CHAR(11) NOT NULL,
   fone VARCHAR(13),
-  PRIMARY KEY (cd_cliente)
+  CONSTRAINT cd_cliente_pkey PRIMARY KEY (cd_cliente)
 );
 CREATE TABLE IF NOT EXISTS  Vendedor
 (
@@ -34,18 +34,15 @@ CREATE TABLE IF NOT EXISTS  Vendedor
   vend_data_nasc DATE,
   dt_admissao DATE,
   vend_fone VARCHAR(13),
-  PRIMARY KEY (cd_vendedor)
+  CONSTRAINT Vendedor_pkey PRIMARY KEY (cd_vendedor)
 );
 CREATE TABLE IF NOT EXISTS Venda
 (
   cd_venda CHAR(6) NOT NULL,
   valor REAL NOT NULL,
   data_venda DATE NOT NULL,
-  cd_carro CHAR(6) NOT NULL,
-  cd_cliente CHAR(6) NOT NULL,
-  cd_empregado CHAR(6) NOT NULL,
-  PRIMARY KEY(cd_venda),
-  FOREIGN KEY(cd_carro) REFERENCES Carro(cd_carro),
-  FOREIGN KEY(cd_cliente) REFERENCES Cliente(cd_cliente),
-  FOREIGN KEY(cd_empregado) REFERENCES Vendedor(cd_vendedor)
+  cd_carro char(2) NOT NULL REFERENCES tb_estado(cd_carro),
+  cd_cliente char(6) NOT NULL REFERENCES tb_estado(cd_carro),
+  cd_empregado char(6) NOT NULL REFERENCES tb_estado(cd_vendedor),
+  CONSTRAINT Vendao_pkey PRIMARY KEY (cd_venda)
 );

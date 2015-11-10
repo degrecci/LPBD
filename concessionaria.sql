@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Carro
 );
 CREATE TABLE IF NOT EXISTS Cliente
 (
-  cd_cliente serial,
+  cd_cliente SERIAL,
   nome VARCHAR(12) NOT NULL,
   sobrenome VARCHAR(20),
   dt_nasc DATE,
@@ -47,18 +47,18 @@ CREATE TABLE IF NOT EXISTS  Endereco
   cidade VARCHAR(12) NOT NULL,
   estado VARCHAR(10) NOT NULL,
   naturalidade VARCHAR(12) NOT NULL,
-  vendedor_fk char(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,
-  cliente_fk char(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
+  vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,
+  cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
   CONSTRAINT Endereco_pkey PRIMARY KEY (cd_endereco)
 );
 CREATE TABLE IF NOT EXISTS Venda
 (
   cd_venda CHAR(6) NOT NULL UNIQUE,
   valor_fk REAL NOT NULL,
-  carro_fk serial,
+  carro_fk SERIAL,
   venda_data DATE NOT NULL,
   FOREIGN KEY (carro_fk,valor_fk) REFERENCES Carro(cd_carro,valor)ON UPDATE CASCADE,
-  cliente_fk char(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
-  vendedor_fk char(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,
+  cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
+  vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,
   CONSTRAINT Venda_pkey PRIMARY KEY (cd_venda)
 );

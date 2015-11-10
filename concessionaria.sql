@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS  Vendedor
   vend_salario REAL NOT NULL,
   porc_comissao REAL NOT NULL,
   vend_data_nasc DATE,
-  vend_dt_admissao DATE,
+  vend_admissao DATE,
   vend_fone VARCHAR(13),
   CONSTRAINT Vendedor_pkey PRIMARY KEY (cd_vendedor)
 );

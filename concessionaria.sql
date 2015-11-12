@@ -1,4 +1,3 @@
-DROP SCHEMA CONCESSIONARIA;
 CREATE SCHEMA IF NOT EXISTS CONCESSIONARIA;
 
 CREATE TABLE IF NOT EXISTS Carro
@@ -37,6 +36,17 @@ CREATE TABLE IF NOT EXISTS  Vendedor
   vend_fone VARCHAR(13),
   CONSTRAINT Vendedor_pkey PRIMARY KEY (cd_vendedor)
 );
+CREATE TABLE IF NOT EXISTS Loja
+(
+
+  cd_loja serial,
+  lj_nome VARCHAR(12) NOT NULL,
+  lj_cnpj CHAR(14) NOT NULL,
+  lj_cep CHAR(8),
+  lj_fone VARCHAR(13),
+  CONSTRAINT Loja_pkey PRIMARY KEY (cd_loja)
+
+);
 CREATE TABLE IF NOT EXISTS  Endereco
 (
   cd_endereco SERIAL,
@@ -57,6 +67,7 @@ CREATE TABLE IF NOT EXISTS Venda
   valor_fk REAL NOT NULL,
   carro_fk SERIAL,
   venda_data DATE NOT NULL,
+  Loja_fk serial REFERENCES Loja (cd_loja)ON UPDATE CASCADE
   FOREIGN KEY (carro_fk,valor_fk) REFERENCES Carro(cd_carro,valor)ON UPDATE CASCADE,
   cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
   vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,

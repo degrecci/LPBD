@@ -38,14 +38,11 @@ CREATE TABLE IF NOT EXISTS  Vendedor
 );
 CREATE TABLE IF NOT EXISTS Loja
 (
-
-  cd_loja serial,
+  cd_loja SERIAL,
   lj_nome VARCHAR(12) NOT NULL,
   lj_cnpj CHAR(14) NOT NULL,
-  lj_cep CHAR(8),
   lj_fone VARCHAR(13),
   CONSTRAINT Loja_pkey PRIMARY KEY (cd_loja)
-
 );
 CREATE TABLE IF NOT EXISTS  Endereco
 (

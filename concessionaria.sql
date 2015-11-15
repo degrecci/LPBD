@@ -65,6 +65,15 @@ CREATE TABLE IF NOT EXISTS Venda
   CONSTRAINT Venda_pkey PRIMARY KEY (cd_venda)
 );
 
+CREATE VIEW MELHOR_VENDEDOR AS (
+select 
+	vend_nome || vend_sobrenome as NOME,
+	vend_salario as SALARIO,
+	vend_vendidos as "Quantidade de veiculos vendidos"
+from Vendedor);
+
+
+
 
 INSERT INTO Loja (cd_loja,jl_nome,lj_cnpj,jl_fone,lj_cep,lj_nr)
 VALUES (13,'Pedro Cunha','43391124000158',1932569875,13054879,13);
@@ -119,3 +128,4 @@ END;
 
 
 $VENDAS$ LANGUAGE plpgsql;
+

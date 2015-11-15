@@ -1,11 +1,13 @@
-CREATE SCHEMA IF NOT EXISTS CONCESSIONARIA;
+CREATE DATABASE CONCESSIONARIA;
+CREATE USER gerente with PASSWORD 'senha';
+GRANT ALL PRIVILEGES ON CONCESSIONARIA TO gerente;
 
 CREATE TABLE IF NOT EXISTS Carro
 (
   cd_carro SERIAL,
   marca VARCHAR(20) NOT NULL,
   modelo VARCHAR(20) NOT NULL,
-  valor REAL NOT NULL,  
+  valor REAL NOT NULL,
   cor VARCHAR(10),
   ano CHAR(4) NOT NULL,
   estado VARCHAR (9) NOT NULL,
@@ -17,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Cliente
   cd_cliente SERIAL,
   nome VARCHAR(12) NOT NULL,
   sobrenome VARCHAR(20),
-  dt_nasc DATE,
+  nasc DATE,
   sexo CHAR(1) NOT NULL,
   cpf CHAR(11) NOT NULL,
   fone VARCHAR(13),
@@ -31,9 +33,8 @@ CREATE TABLE IF NOT EXISTS  Vendedor
   vend_sexo CHAR(1) NOT NULL,
   vend_salario REAL NOT NULL,
   vend_comissao REAL NOT NULL,
-  vend_dt_nasc DATE,
-  vend_dt_admissao DATE,
-  vend_fone VARCHAR(13),
+  vend_vendidos integer default 0,
+  vend_admissao DATE,
   CONSTRAINT Vendedor_pkey PRIMARY KEY (cd_vendedor)
 );
 CREATE TABLE IF NOT EXISTS Loja
@@ -41,32 +42,79 @@ CREATE TABLE IF NOT EXISTS Loja
   cd_loja SERIAL,
   lj_nome VARCHAR(12) NOT NULL,
   lj_cnpj CHAR(14) NOT NULL,
-  lj_fone VARCHAR(13),
+  lj_fone INTEGER(10),
   CONSTRAINT Loja_pkey PRIMARY KEY (cd_loja)
 );
 CREATE TABLE IF NOT EXISTS  Endereco
 (
   cd_endereco SERIAL,
   rua VARCHAR(20) NOT NULL,
-  numero VARCHAR(5) NOT NULL, /* Coloquei em varchar porque tem nºs como 17-A e 17-B */
+  numero INTEGER NOT NULL,
   complemento VARCHAR(20) NOT NULL,
   bairro VARCHAR(12) NOT NULL,
   cidade VARCHAR(12) NOT NULL,
   estado VARCHAR(10) NOT NULL,
   naturalidade VARCHAR(12) NOT NULL,
-  vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,
-  cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
+  vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE on DELETE CASCADE,
+  cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE on DELETE CASCADE,
   CONSTRAINT Endereco_pkey PRIMARY KEY (cd_endereco)
 );
 CREATE TABLE IF NOT EXISTS Venda
 (
-  cd_venda CHAR(6) NOT NULL UNIQUE,
-  valor_fk REAL NOT NULL,
-  carro_fk SERIAL,
+  cd_venda serial NOT NULL ,
   venda_data DATE NOT NULL,
-  Loja_fk serial REFERENCES Loja (cd_loja)ON UPDATE CASCADE
-  FOREIGN KEY (carro_fk,valor_fk) REFERENCES Carro(cd_carro,valor)ON UPDATE CASCADE,
-  cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE,
-  vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE,
+  Loja_fk serial REFERENCES Loja (cd_loja)ON UPDATE CASCADE,
+  carro_fk serial REFERENCES Carro (cd_carro) ON UPDATE CASCADE on DELETE CASCADE,
+  valor_fk DECIMAL(5,2) not null REFERENCES Carro (valor) ON UPDATE CASCADE on DELETE CASCADE,
+  cliente_fk CHAR(6) NOT NULL REFERENCES Cliente(cd_cliente)ON UPDATE CASCADE on DELETE CASCADE,
+  vendedor_fk CHAR(6) NOT NULL REFERENCES Vendedor(cd_vendedor)ON UPDATE CASCADE on DELETE CASCADE,
   CONSTRAINT Venda_pkey PRIMARY KEY (cd_venda)
 );
+
+
+
+INSERT INTO Carro (marca,modelo,valor,cor,ano,estado,chassi)
+VALUES ('CHEVROLET','CORSA',32.000,'PRETO',2012,'SEMI-NOVO','9Bc485038271696669');
+VALUES ('CHEVROLET','ONIX',38.000,'PRATA',2014,'NOVO','9Bc48503821694867');
+VALUES ('FIAT','PALIO',22.000,'PRETO',2010,'USADO','9BF48503821694567');
+VALUES ('FIAT','STRADA',42.000,'PRATA',2014,'SEMI-NOVO','9BF48503821694567');
+VALUES ('FORD','FOCUS',46.000,'VERMELHO',2005,'USADO','9BF48503821694567');
+VALUES ('FORD','FUSION',97.000,'PRETO',2015,'NOVO','9BF48503821694567');
+VALUES ('VOLKSWAGEN','FUSCA',4.000,'BRANCO',1976,'USADO','9BV48503821694567');
+VALUES ('VOLKSVAGEN','KOMBI',26.000,'AZUL-BEBE',2001,'USADO','9BV48503821694567');
+VALUES ('BMW','118i',87.000,'PRETO',2011,'SEMI-NOVO','9BB48503821659751');
+VALUES ('MITSUBISHI','ECLIPSE',150.00,'PRETO',2015,'NOVO','9BM48503826482467');
+	
+INSERT INTO Vendedor (vend_nome,vend_sobrenome,vend_sexo,vend_salario,vend_vendidos,vend_admissao,vend_fone)
+VALUES ('Juca','Neves Monteiro',"M",2300,5,'04-05-2010');
+VALUES ('Lucas','Silva e Silva',"M",2000,1,'18-07-2013');
+VALUES ('Mario','Carneiro Pedregulho',"M",2200,2,'28-01-2011');
+VALUES ('Marina','Chaves Bim',"F",3400,16,'24-12-2012');
+VALUES ('Cacilda','Flavia Moreno',"F",1400,2,'28-10-2015');
+
+INSERT INTO Loja (jl_nome,lj_cnpj,jl_fone)
+VALUES ('Pedro Cunha','43391124000158',1932569875);
+VALUES ('Derivada','43684524000158',1933659874);
+VALUES ('Francisco Mata','98543224000158',1530259846);
+VALUES ('Associassoes','98562424000158',1831659832);
+VALUES ('Fatamota','98563214000158',1132658745);
+
+INSERT INTO Cliente(nome.sobrenome,nasc,sexo,cpfl,fone)
+
+
+CREATE TRIGGER VENDAS AFTER INSERT ON Venda
+FOR EACH ROW EXECUTE PROCEDURE VENDEU();
+
+CREATE FUNCTION VENDEU() RETURNS trigger $VENDAS$
+BEGIN
+	DELETE FROM CARRO
+	WHERE cd_carro = (
+	SELECT carro_fk
+	FROM Venda
+	ORDER BY cd_venda DESC
+	limit 0,1;
+	);		
+END;
+
+
+$VENDAS$ LANGUAGE plpgsql;

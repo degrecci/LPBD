@@ -76,37 +76,26 @@ ORDER BY vend_vendidos DESC limit 1
 
 CREATE OR REPLACE FUNCTION VENDEU() RETURNS TRIGGER AS $VENDAS$
 BEGIN
+	UPDATE Vendedor
+	SET vend_vendidos = (vend_vendidos + 1)
+	WHERE cd_vendedor = (
+		SELECT vendedor_fk
+		FROM Venda
+		ORDER BY cd_venda DESC
+		LIMIT (1));
 	DELETE FROM CARRO
 	WHERE cd_carro = (
 		SELECT carro_fk
 		FROM Venda
 		ORDER BY cd_venda DESC
 		limit (1)
-	); return new;
+	); return old
 	END;
 $VENDAS$ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER VENDAS AFTER INSERT ON Venda
 FOR EACH ROW EXECUTE PROCEDURE VENDEU();
-
-
-CREATE OR REPLACE FUNCTION VENDEU2() RETURNS TRIGGER AS $VENDAS2$
-BEGIN
-	UPDATE Vendedor
-	SET vend_vendidos = vend_vendidos + 1
-	WHERE cd_vendedor = (
-		SELECT vendedor_fk
-		FROM Venda
-		ORDER BY cd_venda DESC
-		LIMIT (1)
-	);return new2;
-END;
-$VENDAS2$ LANGUAGE plpgsql;
-
-
-CREATE TRIGGER VENDAS2 AFTER INSERT ON Venda
-FOR EACH ROW EXECUTE PROCEDURE VENDEU2();
 
 
 

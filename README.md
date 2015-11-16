@@ -14,7 +14,7 @@
 
 ~~6. Árvores B e B+~~
 
-7. Capítulo contendo explicação sobre a parte Prática: porque escolheu o tema do banco de dados , como criou o banco, e uma breve descrição do mesmo, incluindo descrições das funcionalidades da view, da função e das 3 consultas.
+~~7. Capítulo contendo explicação sobre a parte Prática: porque escolheu o tema do banco de dados , como criou o banco, e uma breve descrição do mesmo, incluindo descrições das funcionalidades da view, da função e das 3 consultas.~~
 
 Incluir bibliografia consultada (Incluir, obrigatoriamente, dois livros)
 
@@ -34,7 +34,7 @@ Para separação entre parágrafos pode-se usar a entrada da primeira linha a pa
 
 ~~3-Criar 1 visão de dados.~~
 
-4-Criar 1 function, procedure ou trigger.
+~~4-Criar 1 function, procedure ou trigger.~~
 
 ~~5- Criar 3 consultas quaisquer.~~
 

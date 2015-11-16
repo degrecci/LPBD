@@ -2,19 +2,19 @@
 
 ###Teoria – Mínimo 15 páginas / Máximo 20 páginas - 01 capítulo para cada item abaixo:
 
-1. SQL – Extensões procedurais: function, procedure, trigger
+~~1. SQL – Extensões procedurais: function, procedure, trigger~~
 
-2. Controle de transações lógicas de atualização de dados
+~~2. Controle de transações lógicas de atualização de dados~~
 
-3. Controle de Concorrência
+~~3. Controle de Concorrência~~
 
-4. Mecanismos de otimização de consultas
+~~4. Mecanismos de otimização de consultas~~
 
-5. Índices
+~~5. Índices~~
 
-6. Árvores B e B+
+~~6. Árvores B e B+~~
 
-7. Capítulo contendo explicação sobre a parte Prática: porque escolheu o tema do banco de dados , como criou o banco, e uma breve descrição do mesmo, incluindo descrições das funcionalidades da view, da função e das 3 consultas
+~~7. Capítulo contendo explicação sobre a parte Prática: porque escolheu o tema do banco de dados , como criou o banco, e uma breve descrição do mesmo, incluindo descrições das funcionalidades da view, da função e das 3 consultas.~~
 
 Incluir bibliografia consultada (Incluir, obrigatoriamente, dois livros)
 
@@ -26,17 +26,17 @@ Para separação entre parágrafos pode-se usar a entrada da primeira linha a pa
 
 ###Prática - Banco de Dados Qualquer - Tema Livre
 
-1-Script de criação do banco e no mínimo 5 tabelas
+~~1-Script de criação do banco e no mínimo 5 tabelas~~
 
 (Aplicar condições de restrição conforme material Aula 3).
 
-2-Inserção de Dados nas Tabelas (mínimo 5 em cada tabela).
+~~2-Inserção de Dados nas Tabelas (mínimo 5 em cada tabela).~~
 
-3-Criar 1 visão de dados.
+~~3-Criar 1 visão de dados.~~
 
-4-Criar 1 function, procedure ou trigger.
+~~4-Criar 1 function, procedure ou trigger.~~
 
-5- Criar 3 consultas quaisquer.
+~~5- Criar 3 consultas quaisquer.~~
 
 Usar, obrigatoriamente, PostgreSQL
 

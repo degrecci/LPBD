@@ -3,6 +3,7 @@ CREATE USER gerente with PASSWORD 'senha';
 GRANT ALL PRIVILEGES ON CONCESSIONARIA TO gerente;
 */
 
+/* CRIAÇÃO DAS TABELAS -- EXECUTAR PRIMEIRO */
 CREATE TABLE IF NOT EXISTS Loja
 (
   cd_loja INT NOT NULL UNIQUE,
@@ -63,6 +64,8 @@ CREATE TABLE IF NOT EXISTS Venda
   CONSTRAINT Venda_pkey PRIMARY KEY (cd_venda)
 );
 
+/* VIEW -- EXECUTAR EM SEGUNDO */
+
 CREATE VIEW MELHOR_VENDEDOR AS (
 select
 	vend_nome || vend_sobrenome as NOME,
@@ -72,7 +75,7 @@ FROM Vendedor
 ORDER BY vend_vendidos DESC limit 1
 );
 
-
+/* TRIGGER -- EXECUTAR EM TERCEIRO */
 
 CREATE OR REPLACE FUNCTION VENDEU() RETURNS TRIGGER AS $VENDAS$
 BEGIN
@@ -98,7 +101,7 @@ CREATE TRIGGER VENDAS AFTER INSERT ON Venda
 FOR EACH ROW EXECUTE PROCEDURE VENDEU();
 
 
-
+/* INSERÇÃO DE VALORES -- EXECUTAR EM QUARTO */
 
 INSERT INTO Loja (cd_loja,lj_nome,lj_cnpj,lj_fone,lj_cep,lj_nr)
 VALUES (13,'Pedro Cunha','43391124000158',1932569875,13054879,13);
@@ -160,6 +163,7 @@ VALUES ('Augusto','Garoto Fru','17-09-1990','m',41387456993,19986593,16798740,77
 INSERT INTO Cliente(nome,sobrenome,nasc,sexo,cpf,fone,cep,nr)
 VALUES ('Victor','Silva Peres','17-09-1990','m',21695303669,1132659974,14659896,6458);
 
+/* COMANDOS DE SELEÇÃO -- EXECUTAR EM QUINTO */
 
 SELECT marca, modelo, ano, cor, estado, valor
 FROM carro
@@ -172,6 +176,8 @@ ORDER BY vend_salario DESC;
 SELECT v.vend_nome, v.vend_sobrenome, v.vend_vendidos, l.lj_nome
 FROM Vendedor as v INNER JOIN Loja as l on l.cd_loja = v.cd_vendedor;
 
+/* INSERÇÃO DE VALORES 2, EXECUTA A TRIGGER, EXECUTAR EM SEXTO */
+
 /*
 INSERT INTO Venda(carro_fk,loja_fk,venda_data,cliente_fk,vendedor_fk)
 VALUES (7,13,'22-05-2010',5,5)
@@ -183,5 +189,4 @@ INSERT INTO Venda(carro_fk,loja_fk,venda_data,cliente_fk,vendedor_fk)
 VALUES (5,07,'25-07-2011',4,3)
 INSERT INTO Venda(carro_fk,loja_fk,venda_data,cliente_fk,vendedor_fk)
 VALUES (8,99,'30-12-2014',3,4)
-
 */
